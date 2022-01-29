@@ -1,1 +1,2 @@
 print Good
+echo 'test'
