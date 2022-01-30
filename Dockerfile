@@ -1,6 +1,5 @@
 FROM jenkins
 
-MINTAINER "slurvian013@gmail.com"
 
 RUN sudo apt-get update -y && \
     sudo apt update && sudo apt upgrade -y && \
