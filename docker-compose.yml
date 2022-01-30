@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+
+  app:
+
+    build: .
+
+    command: python hello.py
+
+    volumes:
+
+      - .:/volume-jenkins
+
+    ports:
+
+      - "9090:8080"
