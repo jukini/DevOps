@@ -1,16 +1,14 @@
 FROM jenkins:v1.0
 
-RUN rm -rf /var/lib/apt/lists/*
-RUN sudo apt-get update -y && \
-    sudo apt update && sudo apt upgrade -y && \
-    sudo apt install golang && \
-    sudo mkdir /home/go_sample
+RUN sudo rm -rf /var/lib/apt/lists/*
+RUN sudo apt-get update -y
+RUN sudo apt upgrade -y
+RUN sudo apt install -y golang
+RUN sudo mkdir /home/go_sample
 
 COPY . /home/go_sample
 
 WORKDIR /home/go_sample
-
-RUN go run go_web.go 
 
 EXPOSE 5000
 
