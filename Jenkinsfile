@@ -28,9 +28,7 @@ node {
 
       stage('Tag') {
 
-            sh(script: '''docker tag ${DOCKER_USER_ID}/jenkins \
-
-            ${DOCKER_USER_ID}/jenkins:${BUILD_NUMBER}''') }
+            sh(script: '''docker tag ${DOCKER_USER_ID}/jenkins:v1.0 ${DOCKER_USER_ID}/jenkins:${BUILD_NUMBER}''') }
 
       stage('Push') {
 
