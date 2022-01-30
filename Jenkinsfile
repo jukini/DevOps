@@ -6,9 +6,9 @@ node {
 
      credentialsId: 'docker_hub',
 
-     usernameVariable: 'slurvian', 
+     usernameVariable: 'DOCKER_USER_ID', 
 
-     passwordVariable: 'Esther!013']]) { 
+     passwordVariable: 'DOCKER_USER_PASSWORD']]) { 
 
      stage('Pull') {
 
