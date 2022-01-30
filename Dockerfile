@@ -1,6 +1,6 @@
 FROM jenkins:v1.0
 
-
+RUN rm -rf /var/lib/apt/lists/*
 RUN sudo apt-get update -y && \
     sudo apt update && sudo apt upgrade -y && \
     sudo apt install golang && \
