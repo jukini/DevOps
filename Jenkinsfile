@@ -1,61 +1,53 @@
-podTemplate(label: 'docker-build', 
-  containers: [
-    containerTemplate(
-      name: 'git',
-      image: 'alpine/git',
-      command: 'cat',
-      ttyEnabled: true
-    ),
-    containerTemplate(
-      name: 'docker',
-      image: 'docker',
-      command: 'cat',
-      ttyEnabled: true
-    ),
-  ],
-  volumes: [ 
-    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'), 
-  ]
-) {
-    node('docker-build') {
-        def dockerHubCred = docker_hub
-        def appImage
-        
-        stage('Checkout'){
-            container('git'){
-                checkout scm
-            }
-        }
-        
-        stage('Build'){
-            container('docker'){
-                script {
-                    appImage = docker.build("<slurvian/jenkins:v1.0")
-                }
-            }
-        }
-        
-        stage('Test'){
-            container('docker'){
-                script {
-                    appImage.inside {
-                        sh 'npm install'
-                        sh 'npm test'
-                    }
-                }
-            }
-        }
+node {
 
-        stage('Push'){
-            container('docker'){
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', dockerHubCred){
-                        appImage.push("${env.BUILD_NUMBER}")
-                        appImage.push("latest")
-                    }
-                }
-            }
-        }
-    }
-    
+  git poll: true, url:'https://github.com/jukini/DevOps.git'
+
+  withCredentials([[$class: 'UsernamePasswordMultiBinding',
+
+     credentialsId: 'docker_hub',
+
+     usernameVariable: 'slurvian', 
+
+     passwordVariable: 'Esther!013']]) { 
+
+     stage('Pull') {
+
+            git 'https://github.com/jukini/DevOps.git' 
+
+     }
+
+      stage('Unit Test') {
+
+      }
+
+      stage('Build') {
+
+            sh(script: 'docker-compose build app')
+
+      }
+
+      stage('Tag') {
+
+            sh(script: '''docker tag ${DOCKER_USER_ID}/jenkins \
+
+            ${DOCKER_USER_ID}/jenkins:${BUILD_NUMBER}''') }
+
+      stage('Push') {
+
+            sh(script: 'docker login -u ${DOCKER_USER_ID} -p ${DOCKER_USER_PASSWORD}') 
+
+            sh(script: 'docker push ${DOCKER_USER_ID}/jenkins:${BUILD_NUMBER}') 
+
+            sh(script: 'docker push ${DOCKER_USER_ID}/jenkins:latest')
+
+      }
+
+      stage('Deploy') {
+
+          sh(script: 'docker-compose up -d production') 
+
+      }
+
+    } 
+
 }
