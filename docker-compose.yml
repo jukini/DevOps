@@ -6,6 +6,12 @@ services:
 
     build: .
 
+    image: ${DOCKER_USER_ID}/jenkins
+
+  production:
+
+    image: ${DOCKER_USER_ID}/jenkins:${BUILD_NUMBER}
+
     command: python hello.py
 
     volumes:
