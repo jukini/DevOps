@@ -1,4 +1,4 @@
-FROM jenkins
+FROM jenkins:v1.0
 
 
 RUN sudo apt-get update -y && \
