@@ -23,6 +23,7 @@ node {
       stage('Build') {
 
             sh(script: 'sudo apt-get install -y docker-compose')
+            sh(script: 'sudo apt-get install -y docker')
             sh(script: 'docker-compose build app')
 
       }
