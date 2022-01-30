@@ -6,11 +6,11 @@ services:
 
     build: .
 
-    image: ${DOCKER_USER_ID}/jenkins
+    image: ${DOCKER_USER_ID}/jenkins:v1.0
 
   production:
 
-    image: ${DOCKER_USER_ID}/jenkins:${BUILD_NUMBER}
+    image: ${DOCKER_USER_ID}/jenkins:v1.0:${BUILD_NUMBER}
 
     command: python hello.py
 

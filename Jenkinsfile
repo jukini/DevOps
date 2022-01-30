@@ -28,17 +28,17 @@ node {
 
       stage('Tag') {
 
-            sh(script: '''docker tag ${DOCKER_USER_ID}/jenkins \
+            sh(script: '''docker tag ${DOCKER_USER_ID}/jenkins:v1.0 \
 
-            ${DOCKER_USER_ID}/jenkins:${BUILD_NUMBER}''') }
+            ${DOCKER_USER_ID}/jenkins:v1.0:${BUILD_NUMBER}''') }
 
       stage('Push') {
 
             sh(script: 'docker login -u ${DOCKER_USER_ID} -p ${DOCKER_USER_PASSWORD}') 
 
-            sh(script: 'docker push ${DOCKER_USER_ID}/jenkins:${BUILD_NUMBER}') 
+            sh(script: 'docker push ${DOCKER_USER_ID}/jenkins:v1.0:${BUILD_NUMBER}') 
 
-            sh(script: 'docker push ${DOCKER_USER_ID}/jenkins:latest')
+            sh(script: 'docker push ${DOCKER_USER_ID}/jenkins:v1.0:latest')
 
       }
 
