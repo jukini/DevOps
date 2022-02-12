@@ -14,6 +14,8 @@ ENV APACHE_PID_FILE  /var/run/apache2/apache2.pid
  
 # 최신 버전의 패키지 설치를 위한 패키지 설치
 RUN apt install software-properties-common -y
+RUN apt install sudo -y
+RUN apt install vim -y
  
 # PPA-php 설치 (php 7.3 버전 사용을 위해)
 RUN add-apt-repository ppa:ondrej/php
@@ -31,14 +33,8 @@ RUN apt install php7.3-bcmath php7.3-bz2 php7.3-curl php7.3-gd php7.3-intl php7.
 RUN apt install libapache2-mod-php7.3
  
 # 이미지에 소스 코드 카피
-COPY ./www/index.php /home/visual/index.php
-COPY ./www/118_select.php /home/visual/select.php
- 
-# 설정 이미지에 카피
-#COPY ./www/visual.conf /etc/apache2/sites-available/visual.conf
- 
-# 카피한 가상 호스트 설정 파일 심볼 링크 설정
-RUN ln -s /etc/apache2/sites-available/visual.conf /etc/apache2/sites-enabled/
+COPY ./www/index.php /var/www/html/index.php
+COPY ./www/118_select.php /var/www/html/select.php
  
 EXPOSE 80
  

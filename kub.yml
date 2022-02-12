@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.dev.server: deployment
+  name: dev-kub # deployment의 이름
+spec:
+  replicas: 4 # 개체수
+  selector:
+    matchLabels:
+      app.dev.server: node # pod의 label을 선택해서 가져오기
+  template:
+    metadata:
+      labels:
+        app.dev.server: node # pod의 label을 지정
+
+    spec:
+      containers:
+        - image: slurvian/web_juki:latest
+          name: juki-web
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: /temp
+              name: dockerv
+      volumes: # 참고할 volume 지정
+        - name: dockerv # volume 의 이름 지정
+          hostPath:
+            path: /Users/juki/Documents/docker_vol # volume으로 할 path
+            type: DirectoryOrCreate # type 지정
+
